@@ -134,7 +134,9 @@ contract RPS {
     }
 
     
-    function payout(uint roomNum, Hand _hand, string memory _key) public payable isPlayer(roomNum, msg.sender) beforePayout(roomNum, _hand,  _key, msg.sender) {
+    function payout(uint roomNum, Hand _hand, string memory _key) public payable 
+    isPlayer(roomNum, msg.sender) 
+    beforePayout(roomNum, _hand,  _key, msg.sender) {
         // 키값을 받아서 originator 핸드를 할당해주고 나머지 연산 (beforePayout modifier)
 
         
