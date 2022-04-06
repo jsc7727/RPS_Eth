@@ -179,11 +179,6 @@ contract RPS {
     }
 
     modifier beforePayout(uint roomNum, Hand _hand, string memory _key, address sender) {
-        // 1. 시간 계산
-        // 함수를 하나 더만들어서 
-        // taker 돈을 걸고 그 때부터 하루로
-
-        // 하루이내에 payout (만들고 하루이내 )
         uint currentTime = block.timestamp;
         if (currentTime > rooms[roomNum].createdTime + (60*60*24)) {
             // 정산이 하루 지났을 때 : taker 승리
@@ -208,10 +203,9 @@ contract RPS {
     }
 
     
-    function payout(uint roomNum, Hand _hand, string memory _key) public payable isPlayer(roomNum, msg.sender) beforePayout(roomNum, _hand,  _key, msg.sender) {
-        // 키값을 받아서 originator 핸드를 할당해주고 나머지 연산 (beforePayout modifier)
-
-        
+    function payout(uint roomNum, Hand _hand, string memory _key) public payable 
+    isPlayer(roomNum, msg.sender) 
+    beforePayout(roomNum, _hand,  _key, msg.sender) {
         // 승패에 따라 정산
         if (rooms[roomNum].originator.playerStatus == PlayerStatus.STATUS_TIE && rooms[roomNum].taker.playerStatus == PlayerStatus.STATUS_TIE) {
             rooms[roomNum].originator.addr.transfer(rooms[roomNum].originator.playerBetAmount);
